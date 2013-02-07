@@ -21,5 +21,8 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "wemo.js": "0.0.2"
+  },
+  "config":{
+    "sockets":[]
   }
 }
