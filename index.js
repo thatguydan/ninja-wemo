@@ -36,7 +36,6 @@ function wemo(opts,app) {
 
     // Discover new ones
     WeMo.discover(function(WeMos) {
-      console.log(WeMos)
       WeMos.forEach(loadWemo.bind(self))
     });
   });
@@ -46,7 +45,6 @@ function wemo(opts,app) {
 module.exports = wemo;
 
 function loadWemo(thisWeMo) {
-    console.log(this._opts)
 
   var host = thisWeMo.location.host;
 
