@@ -29,12 +29,7 @@ function wemo(opts,app) {
 
   app.on('client::up',function(){
 
-    // Load existing Belkin WeMo's
-    if (self._opts.sockets.length>0) {
-      self._opts.socket.forEach(loadWemo.bind(self));
-    }
-
-    // Discover new ones
+    // Discover WeMos
     WeMo.discover(function(WeMos) {
       WeMos.forEach(loadWemo.bind(self))
     });
