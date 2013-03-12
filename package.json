@@ -1,0 +1,28 @@
+{
+  "name": "ninja-wemo",
+  "version": "0.0.0",
+  "description": "Ninja Blocks module for interacting with a Belking WeMo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thatguydan/ninja-wemo.git"
+  },
+  "keywords": [
+    "Belkin",
+    "WeMo",
+    "Ninja",
+    "Blocks"
+  ],
+  "author": "Daniel Friedman",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "wemo.js": "0.0.2"
+  },
+  "config":{
+    "sockets":[]
+  }
+}
