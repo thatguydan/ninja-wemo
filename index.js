@@ -48,27 +48,29 @@ wemo.prototype.scan = function() {
   // Discover WeMos
   WeMo.discover(function(WeMos) {
 
+    this._app.log.info('(WeMo) Found %s WeMo(s)',WeMos.length);
     // Iterate over found WeMos
     WeMos.forEach(function(WeMo) {
 
       var host = WeMo.location.host;
 
       if (this._opts.sockets.indexOf(host)===-1) {
-
         this.remember(host);
-        this.load(host);
       }
+
+      this.load(host);
+
     }.bind(this));
 
   }.bind(this));
-}
+};
 
 wemo.prototype.load = function(host) {
 
   var client = WeMo.createClient(host);
   var G = this._opts.sockets.indexOf(host);
 
-  this.emit('register',new Socket(client,G));
+  this.emit('register',new Socket(this._app,client,G));
 };
 
 /**
@@ -95,7 +97,7 @@ wemo.prototype.config = function(rpc,cb) {
   }
 
   switch (rpc.method) {
-    case 'scan':               return configHandlers.configScan.call(this,rpc.params,cb); break;
+    case 'configScan':               return configHandlers.configScan.call(this,rpc.params,cb); break;
     case 'manual_set_wemo':    return configHandlers.manual_set_wemo.call(this,rpc.params,cb); break;
     case 'manual_get_wemo':    return configHandlers.manual_get_wemo.call(this,rpc.params,cb); break;
     case 'manual_show_remove': return configHandlers.manual_show_remove.call(this,rpc.params,cb); break;
