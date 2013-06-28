@@ -1,5 +1,5 @@
 {
-  "name": "ninja-wemo",
+  "name": "ninja-belkin-wemo",
   "version": "0.0.1",
   "description": "Ninja Blocks module for interacting with a Belkin WeMo",
   "main": "index.js",
