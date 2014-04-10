@@ -1,7 +1,7 @@
 {
   "name": "ninja-belkin-wemo",
-  "version": "0.0.1",
-  "description": "Ninja Blocks module for interacting with a Belkin WeMo",
+  "version": "0.0.2",
+  "description": "Ninja Blocks driver for interacting with a Belkin WeMo",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,12 +17,15 @@
     "Blocks"
   ],
   "author": "Daniel Friedman",
+  "contributors": [
+    "Elliot Shepherd <elliot@ninjablocks.com>"
+  ],
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
-    "wemo.js": "0.0.2"
+    "wemo": "0.1.0"
   },
-  "config":{
-    "sockets":[]
+  "config": {
+    "sockets": []
   }
 }
