@@ -37,10 +37,12 @@ Driver.prototype.load = function(device) {
   this._app.log.info('(WeMo) Found a WeMo - %s (Type: %s) @ %s', device.friendlyName, device.deviceType, device.ip);
 
   this.emit('register', new Socket(this._app, new WeMo(device.ip, device.port), device));
+  
+  this._app.log.info('(WeMo) Device Found :', device);
 
-  if (!device.deviceType.match(/controllee|lightswitch|sensor/)) {
-    this._app.log.warn('(WeMo) Unknown device (Not a switch?)', device);
-  }
+  //if (!device.deviceType.match(/controllee|lightswitch|sensor/)) {
+    //this._app.log.warn('(WeMo) Unknown device (Not a switch?)');
+  //}
 };
 
 /**
