@@ -39,7 +39,7 @@ Driver.prototype.load = function(device) {
   if (device.deviceType.indexOf('controllee') > -1) {
     this.emit('register', new Socket(this._app, new WeMo(device.ip, device.port), device));
   } else {
-    this._app.log.warn('(WeMo) Unknown device (Not a switch?)');
+    this._app.log.warn('(WeMo) Unknown device (Not a switch?)', device);
   }
 };
 
