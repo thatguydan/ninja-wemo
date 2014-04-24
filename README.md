@@ -3,6 +3,9 @@ ninja-wemo
 
 - Changelog
 
+0.0.5
+ - Fix incompatibility with Node.JS 0.8
+
 0.0.4
  - Handle device IP:Port changes
  - Faster default device state polling time (2 seconds)
