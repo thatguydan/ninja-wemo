@@ -23,9 +23,11 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
-    "wemo": "0.1.0"
+    "wemo": "0.1.0",
+    "underscore": "^1.6.0"
   },
   "config": {
-    "sockets": []
+    "deviceScanInterval": 60000,
+    "devicePollInterval": 2000
   }
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-var Socket = require('./lib/socket');
+var WemoDevice = require('./lib/device');
 var util = require('util');
 var stream = require('stream');
 var WeMo = require('wemo');
@@ -13,6 +13,12 @@ function Driver(opts,app) {
   this._opts = opts;
 
   app.once('client::up', this.init.bind(this));
+
+  // Scan for devices once every minute (by default) (existing devices will be updated if ip or port changes)
+  setInterval(this.scan.bind(this), opts.deviceScanInterval);
+
+  // We store any found devices here, indexed by serial number (so we can update ip+port if they change)
+  this.devices = {};
 }
 
 /**
@@ -24,6 +30,7 @@ Driver.prototype.init = function(){
 
 Driver.prototype.scan = function() {
 
+  // Stop an existing search if there was one running.
   if (this.search) {
     this.search.stop();
   }
@@ -33,23 +40,28 @@ Driver.prototype.scan = function() {
   this.search.on('found', this.load.bind(this));
 };
 
-Driver.prototype.load = function(device) {
-  this._app.log.info('(WeMo) Found a WeMo - %s (Type: %s) @ %s', device.friendlyName, device.deviceType, device.ip);
+Driver.prototype.load = function(info) {
 
-  this.emit('register', new Socket(this._app, new WeMo(device.ip, device.port), device));
+  if (!this.devices[info.serialNumber]) {
+    this._app.log.info('(WeMo) Found a WeMo - %s (Type: %s) @ %s:%s', info.friendlyName, info.deviceType, info.ip, info.port);
+
+    var device = new WemoDevice(this._app, new WeMo(info.ip, info.port), info, this._opts.devicePollInterval);
+    this.devices[info.serialNumber] = device;
+
+    this.emit('register', device);
+  } 
+
+  var existing = this.devices[info.serialNumber];
+
+  if (existing.info.ip !== info.ip || existing.info.port !== info.port) {
+    this._app.log.info('(WeMo) WeMo Changed IP - %s from %s:%s to %s:%s', info.friendlyName, existing.info.ip, existing.info.port, info.ip, info.port);
   
-  this._app.log.info('(WeMo) Device Found :', device);
+    existing.device = new WeMo(info.ip, info.port);
+    existing.info = info;
+  }
 
-  //if (!device.deviceType.match(/controllee|lightswitch|sensor/)) {
-    //this._app.log.warn('(WeMo) Unknown device (Not a switch?)');
-  //}
 };
 
-/**
- * Called when a user prompts a configuration
- * @param  {Object}   rpc     RPC Object
- * @param  {Function} cb      Callback with return data
- */
 Driver.prototype.config = function(rpc,cb) {
 
   if (!rpc) {
