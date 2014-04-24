@@ -1,6 +1,6 @@
 {
   "name": "ninja-belkin-wemo",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Ninja Blocks driver for interacting with a Belkin WeMo",
   "main": "index.js",
   "scripts": {
